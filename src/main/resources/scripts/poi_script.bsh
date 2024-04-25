@@ -11,12 +11,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import com.example.tests.*;
+import com.example.utils.PathUtil;
 LoopRowTableRenderPolicy policy = new LoopRowTableRenderPolicy();
 Configure config = Configure.builder()
         .bind("images", policy).bind("labors", policy).bind("detail_table", new DetailTablePolicy()).build();
 HashMap params =  new HashMap();
 params.put("title", "Hi, poi-tl Word模板引擎");
-params.put("image", "C:\\Users\\truth\\Desktop\\logo.png");
+params.put("image", PathUtil.getDefaultImg());
 params.put("table0", Tables.of(new String[][] {
                            new String[] { "00", "01" },
                            new String[] { "10", "11" }
@@ -24,16 +25,16 @@ params.put("table0", Tables.of(new String[][] {
 List rows = new ArrayList();
 for(int i=0;i<5;i++){
     ImageRow imageRow = new ImageRow();
-    imageRow.setImage0("C:\\Users\\truth\\Desktop\\logo.png");
-    imageRow.setImage1("C:\\Users\\truth\\Desktop\\logo.png");
+    imageRow.setImage0(PathUtil.getDefaultImg());
+    imageRow.setImage1(PathUtil.getDefaultImg());
     rows.add(imageRow);
 }
 
 params.put("images", rows);
 params.put("detail_table", DetailData.generateData());
-XWPFTemplate template = XWPFTemplate.compile("C:\\Users\\truth\\Desktop\\template.docx",config).render(params);
+XWPFTemplate template = XWPFTemplate.compile(PathUtil.getDocsRoot()+"\\template.docx",config).render(params);
 try {
-    template.writeAndClose(new FileOutputStream("C:\\Users\\truth\\Desktop\\output.docx"));
+    template.writeAndClose(new FileOutputStream(PathUtil.getDocsRoot()+"\\output-script.docx"));
 } catch (IOException e) {
     e.printStackTrace();
 }

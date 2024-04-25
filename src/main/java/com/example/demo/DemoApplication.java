@@ -5,10 +5,15 @@ import com.example.tests.TestPoi;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.io.File;
+
 @SpringBootApplication
 public class DemoApplication {
 
 	public static void main(String[] args) {
+		File currentDirectory = new File(".\\docs");
+		String currentPath = currentDirectory.getAbsolutePath();
+		System.out.println("当前目录：" + currentPath);
 		// 1. java代码调用poi_tl
 		TestPoi.main(null);
 		// 2. BeanShell 脚本实现具体逻辑操作。

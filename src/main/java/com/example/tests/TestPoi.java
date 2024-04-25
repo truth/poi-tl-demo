@@ -7,6 +7,7 @@ import com.deepoove.poi.data.style.BorderStyle;
 import com.deepoove.poi.plugin.table.LoopRowTableRenderPolicy;
 import com.example.tests.DetailData;
 import com.example.tests.ImageRow;
+import com.example.utils.PathUtil;
 import lombok.Data;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
@@ -28,10 +29,10 @@ public class TestPoi {
         Configure config = Configure.builder().addPlugin('!',new ScriptPolicy())
                 .bind("images", policy).bind("labors", policy).bind("detail_table", new ScriptPolicy()).build();
 
-        XWPFTemplate template = XWPFTemplate.compile("C:\\Users\\truth\\Desktop\\template.docx",config).render(
+        XWPFTemplate template = XWPFTemplate.compile(PathUtil.getDocsRoot()+"\\template.docx",config).render(
                 new HashMap<String, Object>(){{
                     put("title", "Hi, poi-tl Word模板引擎");
-                    put("image", "C:\\Users\\truth\\Desktop\\logo.png");
+                    put("image", PathUtil.getDefaultImg());
                     put("table0", Tables.of(new String[][] {
                             new String[] { "00", "01" },
                             new String[] { "10", "11" }
@@ -40,8 +41,8 @@ public class TestPoi {
                     List<ImageRow> rows = new ArrayList<ImageRow>();
                     for(int i=0;i<5;i++){
                         ImageRow imageRow = new ImageRow();
-                        imageRow.setImage0("C:\\Users\\truth\\Desktop\\logo.png");
-                        imageRow.setImage1("C:\\Users\\truth\\Desktop\\logo.png");
+                        imageRow.setImage0(PathUtil.getDefaultImg());
+                        imageRow.setImage1(PathUtil.getDefaultImg());
                         imageRow.setTable0(Tables.of(new String[][] {
                                 new String[] { "00", "01" },
                                 new String[] { "10", "11" }
@@ -58,7 +59,7 @@ public class TestPoi {
                     put("detail_table1", ScriptData.build("scripts/data_script.bsh",DetailData.generateData()));
                 }});
         try {
-            template.writeAndClose(new FileOutputStream("C:\\Users\\truth\\Desktop\\output.docx"));
+            template.writeAndClose(new FileOutputStream(PathUtil.getDocsRoot()+"\\output.docx"));
         } catch (IOException e) {
             e.printStackTrace();
         }
