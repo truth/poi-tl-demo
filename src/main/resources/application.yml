@@ -1,0 +1,10 @@
+# 开发环境配置
+server:
+  # 服务器的HTTP端口，默认为8080
+  application:
+    name: demo
+
+# 日志配置
+logging:
+  level:
+    com.example: debug
